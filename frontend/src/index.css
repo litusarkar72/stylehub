@@ -1,0 +1,170 @@
+
+@import "tailwindcss";
+
+/* Theme */
+:root {
+  --stylehub-accent: #d96c50;
+  --stylehub-accent-dark: #b95239;
+  --stylehub-cream: #fbf7f2;
+  --stylehub-ink: #241b17;
+  --stylehub-muted: #77716c;
+  --stylehub-border: rgba(120, 90, 70, 0.12);
+  --stylehub-shadow: 0 8px 30px rgba(56, 36, 24, 0.05);
+}
+
+/* Global styles */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  color: var(--stylehub-ink);
+  background: var(--stylehub-cream);
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+a,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* Page background */
+.stylehub-glow {
+  background:
+    radial-gradient(
+      circle at 5% 5%,
+      rgba(245, 193, 157, 0.2),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 95% 15%,
+      rgba(217, 108, 80, 0.09),
+      transparent 28%
+    ),
+    var(--stylehub-cream);
+}
+
+/* Entrance animation */
+@keyframes stylehub-enter {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stylehub-enter {
+  animation: stylehub-enter 0.55s ease-out both;
+}
+
+.stylehub-delay-1 {
+  animation-delay: 100ms;
+}
+
+.stylehub-delay-2 {
+  animation-delay: 180ms;
+}
+
+.stylehub-delay-3 {
+  animation-delay: 260ms;
+}
+
+/* Premium cards */
+.stylehub-card {
+  border: 1px solid var(--stylehub-border);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: var(--stylehub-shadow);
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    border-color 220ms ease;
+}
+
+@media (hover: hover) {
+  .stylehub-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(217, 108, 80, 0.3);
+    box-shadow: 0 16px 38px rgba(56, 36, 24, 0.09);
+  }
+}
+
+/* Buttons */
+.stylehub-button {
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    background-color 180ms ease;
+}
+
+@media (hover: hover) {
+  .stylehub-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(36, 27, 23, 0.15);
+  }
+}
+
+.stylehub-button:active {
+  transform: scale(0.98);
+}
+
+.stylehub-button:focus-visible,
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid rgba(217, 108, 80, 0.55);
+  outline-offset: 3px;
+}
+
+/* Images */
+.stylehub-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Text selection */
+::selection {
+  color: #fff;
+  background: var(--stylehub-accent);
+}
+
+/* Reduced motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
