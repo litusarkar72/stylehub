@@ -38,10 +38,10 @@ const allowedOrigins = [
   "http://localhost:5174",
 
   // Admin Netlify
-  "https://gorgeous-hotteok-25a012.netlify.app",
+  "https://majestic-chimera-caebc3.netlify.app",
 
   // Main frontend Netlify
-  "https://taupe-semifreddo-7d8302.netlify.app",
+  "https://stalwart-sprinkles-f6d380.netlify.app",
 ];
 
 const corsOptions = {
