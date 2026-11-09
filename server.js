@@ -1,4 +1,3 @@
-
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
@@ -16,7 +15,6 @@ import queueRoute from "./routes/queueRoute.js";
 import galleryRoute from "./routes/galleryRoute.js";
 import contactRoute from "./routes/contactRoute.js";
 
-// Payment imports
 import paymentRoute from "./routes/paymentRoutes.js";
 import { paymentWebhook } from "./controllers/paymentController.js";
 
@@ -38,14 +36,29 @@ connectDB();
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:5174",
+
+  // Admin Netlify
+  "https://gorgeous-hotteok-25a012.netlify.app",
+
+  // Main frontend Netlify
+  "https://taupe-semifreddo-7d8302.netlify.app",
 ];
 
-app.use(
-  cors({
-    origin: allowedOrigins,
-    credentials: true,
-  })
-);
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+
+    console.error("CORS blocked origin:", origin);
+    return callback(new Error("Not allowed by CORS"));
+  },
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+
+app.use(cors(corsOptions));
 
 // ========================================
 // RAZORPAY WEBHOOK
@@ -76,8 +89,6 @@ app.use("/api/services", serviceRoute);
 app.use("/api/queue", queueRoute);
 app.use("/api/gallery", galleryRoute);
 app.use("/api/contact", contactRoute);
-
-// Payment routes
 app.use("/api/payment", paymentRoute);
 
 // ========================================
@@ -96,7 +107,6 @@ export const io = new Server(server, {
 app.set("io", io);
 
 io.on("connection", (socket) => {
-  // Join salon room
   socket.on("join-salon", (salonId) => {
     if (
       typeof salonId !== "string" ||
@@ -107,7 +117,6 @@ io.on("connection", (socket) => {
 
     const room = `salon-${salonId}`;
 
-    // Prevent unnecessary duplicate joins
     if (socket.rooms.has(room)) {
       return;
     }
@@ -115,7 +124,6 @@ io.on("connection", (socket) => {
     socket.join(room);
   });
 
-  // Leave salon room
   socket.on("leave-salon", (salonId) => {
     if (
       typeof salonId !== "string" ||
@@ -147,6 +155,6 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 8000;
 
-server.listen(PORT, () => {
+server.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
 });
